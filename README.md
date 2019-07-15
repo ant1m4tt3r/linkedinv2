@@ -1,3 +1,5 @@
+![](https://travis-ci.com/augustohdias/linkedinv2.svg?branch=master)
+
 # LinkedIn API v2 REPL Client
 
 
