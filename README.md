@@ -3,13 +3,14 @@
 
 Simple REPL to peform GET requests to LinkedIn API v2
 
-# Installation:
+## Installation
 
+Install mix dependencies and build the executable:
 ```bash
 mix deps.get & mix escript.build
 ```
 
-# Usage
+## Usage
 
 Run the executable:
 
