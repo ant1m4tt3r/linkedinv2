@@ -12,10 +12,30 @@ defmodule LinkedinClient do
   def main(_ \\ []) do
     IO.puts "LinkedInAPI v2 REPL Client\nCreated by: augustohdias"
 
-    case read() do
-      {:repeat, input} -> loop(input)
-      {:exit, _} -> IO.puts "bye!"
-    end
+    read()
+  end
+
+  def read do
+    IO.gets("> ") 
+    |> String.replace("\n", "")     
+    |> String.trim
+    |> run_command
+  end
+
+
+  def run_command("exit") do
+    IO.puts "bye!"
+  end
+
+  def run_command("help") do
+    IO.puts "Let me help you with that!"
+    IO.puts "Why don't you try make a simple get request to the 'bananas' endpoint?'"
+    IO.puts "Try runing: 'GET /bananas'"
+    read()
+  end
+
+  def run_command(input) do
+    loop(input)
   end
 
   def loop(input) do
@@ -27,11 +47,6 @@ defmodule LinkedinClient do
     read()
   end
 
-  def read do
-    str = IO.gets("> ") |> String.replace("\n", "")
-    if str == "exit", do: {:exit, str}, else: {:repeat, str}
-  end
-
   def request(req) do
     case parseRequest(req) do
       {:get, endpoint} -> HTTPoison.get(@api_url <> "#{endpoint}")
@@ -40,8 +55,8 @@ defmodule LinkedinClient do
 
   def parseRequest(req) do
     [reqType, params] = String.split(req, " ")
-    case reqType do
-      "GET" -> {:get, params}
+    case String.downcase reqType do
+      "get" -> {:get, params}
     end
   end
 end
